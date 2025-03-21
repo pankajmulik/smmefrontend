@@ -1,10 +1,9 @@
 import './index.css';
 import './App.css';
-import Navbar from './component/navbar/Navbar';
 import AdminHomepage from './pages/AdminHomepage';
 import AllMobiles from './pages/Allmobiles';
 import Home from './pages/Home';
-import { BrowserRouter, Switch, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import AdminLogin from './pages/adminpages/login/AdminLogin';
 import { useState } from 'react';
 import Signup from './pages/adminpages/signup/Signup';
