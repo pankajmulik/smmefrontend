@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import axios    from 'axios';
+import axios from 'axios';
 
 
 
 
 const Signup = () => {
 
-    const [phoneNumber,setPhone]=useState('');
-const [error, setError] = useState('');
+    const [phoneNumber, setPhone] = useState('');
+    const [error, setError] = useState('');
     const [code, setCode] = useState('');
     const [step, setStep] = useState(1);
 
@@ -18,7 +18,7 @@ const [error, setError] = useState('');
         confirmPassword: '',
         mobileNumber: '',
         otp: '',
-        
+
     });
 
     const [accessCode, setAccessCode] = useState('');
@@ -58,7 +58,7 @@ const [error, setError] = useState('');
 
         // Validate access code from database
         const isValidAccessCode = await validateAccessCode(accessCode)
-            
+
         if (!isValidAccessCode) {
             setErrors({ accessCode: 'Invalid access code' });
             return;
@@ -72,7 +72,7 @@ const [error, setError] = useState('');
     const validateAccessCode = async (accessCode) => {
         // Replace with actual API call to validate access code
 
-        axios.get('http://localhost:8080/sm/admin')
+        axios.get('https://shrimukundrajmobile.onrender.com/sm/admin')
 
         return true;
     };
@@ -86,7 +86,7 @@ const [error, setError] = useState('');
     const handleSendCode = async () => {
         setPhone(formData.mobileNumber)
         try {
-            const response = await axios.post('http://localhost:8080/smm/santu/admin/send-verification-code', { phoneNumber });
+            const response = await axios.post('https://shrimukundrajmobile.onrender.com/smm/santu/admin/send-verification-code', { phoneNumber });
             if (response.data.success) {
                 setStep(2);
             } else {
@@ -99,7 +99,7 @@ const [error, setError] = useState('');
 
     const handleVerifyCode = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/verify-code', { phoneNumber, code });
+            const response = await axios.post('https://shrimukundrajmobile.onrender.com/verify-code', { phoneNumber, code });
             if (response.data.success) {
                 alert('Phone number verified successfully');
             } else {
@@ -141,7 +141,7 @@ const [error, setError] = useState('');
                     <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
                     {errors.mobileNumber && <span className="text-red-500 text-sm">{errors.mobileNumber}</span>}
                 </div> */}
-              
+
                 {/* {otpSent && (
                     <div className="mb-4">
                         <label className="block text-gray-700">OTP</label>
@@ -153,7 +153,7 @@ const [error, setError] = useState('');
                 <div>
                     {step === 1 && (
                         <div>
-                           
+
                             <div className="mb-4">
                                 <label className="block text-gray-700">Mobile Number</label>
                                 <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={
@@ -179,7 +179,7 @@ const [error, setError] = useState('');
                     {error && <p>{error}</p>}
                 </div>
 
-                
+
                 <div className="mb-4">
                     <label className="block text-gray-700">Access Code</label>
                     <input type="text" name="accessCode" value={formData.accessCode} onChange={(e) => {

@@ -9,6 +9,12 @@ const navitems = [
         path: '/all-mobiles'
 
     },
+
+    {
+        name: "Smart Watches",
+        path: '/smart-watches'
+
+    },
     {
         name: "Accessories",
         path: '/accessory'

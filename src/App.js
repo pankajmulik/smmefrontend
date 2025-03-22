@@ -10,6 +10,8 @@ import Signup from './pages/adminpages/signup/Signup';
 import AuthGuard from './component/authguard/Authguard';
 
 import ErrorPage from './component/errorpage/ErrorPage';
+import Accessory from './pages/Accessory';
+import SmartWatches from './pages/SmartWatches';
 
 function App() {
   const location = useLocation();
@@ -25,15 +27,18 @@ function App() {
 
         <Route exact path='/' element={<Home />} />
         <Route path='all-mobiles' element={<AllMobiles />} />
-        <Route path='/accesories' />
-        <Route exact path='/admin/santu' element={<AdminLogin />} />
-        <Route exact path='/admin/santu/signup' element={<Signup />} />
+        <Route path='accesories' element={<Accessory />} />
+
+        <Route path="smart-watches" element={<SmartWatches />} />
+
+        <Route path='admin/santu' element={<AdminLogin />} />
+        <Route path='admin/santu/signup' element={<Signup />} />
         <Route element={<AuthGuard />}>
-          <Route path="/admin/santu/home" element={<AdminHomepage />} />
-          <Route path="/admin/santu/mobiles" element={<AllMobiles />} />
-          <Route path="/admin/santu/head-phones" element={<AllMobiles />} />
-          <Route path="/admin/santu/accessories" element={<AllMobiles />} />
-          <Route path="/admin/santu/smart-watches" element={<AllMobiles />} />
+          <Route path="admin/santu/home" element={<AdminHomepage />} />
+          <Route path="admin/santu/mobiles" element={<AllMobiles />} />
+          <Route path="admin/santu/head-phones" element={<AllMobiles />} />
+          <Route path="admin/santu/accessories" element={<AllMobiles />} />
+          <Route path="admin/santu/smart-watches" element={<AllMobiles />} />
         </Route>
 
         <Route path='*' element={<ErrorPage />} />

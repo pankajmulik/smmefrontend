@@ -11,7 +11,7 @@ const AllMobiles = () => {
       const [productdata, setproductdata] = useState([]);
 
  useEffect(() => {
-    fetch('https://localhost:8080/product/smm')
+     fetch('https://localhost:8080/product/smm')
       .then(res => res.json())
       .then(json => setproductdata(json))
       .catch(error => console.error('Error fetching product data:', error));
