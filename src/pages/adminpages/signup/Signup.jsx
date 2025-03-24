@@ -6,10 +6,8 @@ import axios from 'axios';
 
 const Signup = () => {
 
-    const [phoneNumber, setPhone] = useState('');
     const [error, setError] = useState('');
-    const [code, setCode] = useState('');
-    const [step, setStep] = useState(1);
+
 
     const [formData, setFormData] = useState({
         username: '',
@@ -24,7 +22,6 @@ const Signup = () => {
     const [accessCode, setAccessCode] = useState('');
 
     const [errors, setErrors] = useState({});
-    const [otpSent, setOtpSent] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -33,9 +30,7 @@ const Signup = () => {
         });
     };
 
-    const handlephone = (e) => {
-        setPhone(e.target.value)
-    }
+
 
     const validateForm = () => {
         let formErrors = {};
@@ -64,51 +59,47 @@ const Signup = () => {
             return;
         }
 
-        // Send OTP to mobile number
-        await sendOtp(formData.mobileNumber);
-        setOtpSent(true);
+
     };
 
     const validateAccessCode = async (accessCode) => {
         // Replace with actual API call to validate access code
 
-        axios.get('https://shrimukundrajmobile.onrender.com/sm/admin')
+        axios.get('http://localhost:8080/sm/admin')
 
         return true;
     };
 
-    const sendOtp = async (mobileNumber) => {
-        // Replace with actual API call to send OTP
-        console.log(`Sending OTP to ${mobileNumber}`);
-    };
 
 
-    const handleSendCode = async () => {
-        setPhone(formData.mobileNumber)
-        try {
-            const response = await axios.post('https://shrimukundrajmobile.onrender.com/smm/santu/admin/send-verification-code', { phoneNumber });
-            if (response.data.success) {
-                setStep(2);
-            } else {
-                setError('Failed to send verification code');
-            }
-        } catch (error) {
-            setError('An error occurred. Please try again.');
-        }
-    };
+    // const handleSendCode = async () => {
+    //     setPhone(formData.mobileNumber)
+    //     try {
+    //         const response = await axios.post('http://localhost:8080/smm/santu/admin/send-verification-code', { phoneNumber });
+    //         if (response.data.success) {
+    //             setStep(2);
+    //         } else {
+    //             setError('Failed to send verification code');
+    //         }
+    //     } catch (error) {
+    //         setError('An error occurred. Please try again.');
+    //     }
 
-    const handleVerifyCode = async () => {
-        try {
-            const response = await axios.post('https://shrimukundrajmobile.onrender.com/verify-code', { phoneNumber, code });
-            if (response.data.success) {
-                alert('Phone number verified successfully');
-            } else {
-                setError('Invalid verification code');
-            }
-        } catch (error) {
-            setError('An error occurred. Please try again.');
-        }
-    };
+
+    // };
+
+    // const handleVerifyCode = async () => {
+    //     try {
+    //         const response = await axios.post('http://localhost:8080/smm/santu/admin/verify-code', { phoneNumber, code });
+    //         if (response.data.success) {
+    //             alert('Phone number verified successfully');
+    //         } else {
+    //             setError('Invalid verification code');
+    //         }
+    //     } catch (error) {
+    //         setError('An error occurred. Please try again.');
+    //     }
+    // };
 
 
 
@@ -151,19 +142,21 @@ const Signup = () => {
 
 
                 <div>
-                    {step === 1 && (
-                        <div>
 
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Mobile Number</label>
-                                <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={
-                                    handleChange
-                                } className="w-full px-3 py-2 border rounded-md" />
-                                {errors.mobileNumber && <span className="text-red-500 text-sm">{errors.mobileNumber}</span>}
-                            </div>
-                            <button onClick={handleSendCode}>Send Verification Code</button>
+                    <div>
+
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Mobile Number</label>
+                            <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange
+                            } className="w-full px-3 py-2 border rounded-md" />
+
                         </div>
-                    )}
+                    </div>
+
+                    {/* {step === 1 &&
+                        <button onClick={() => { handleSendCode() }}>Send Verification Code</button>
+
+                    } {errors.mobileNumber && <span className="text-red-500 text-sm">{errors.mobileNumber}</span>}
                     {step === 2 && (
                         <div>
                             <h2>Verify Phone Number</h2>
@@ -175,7 +168,7 @@ const Signup = () => {
                             />
                             <button onClick={handleVerifyCode}>Verify Code</button>
                         </div>
-                    )}
+                    )} */}
                     {error && <p>{error}</p>}
                 </div>
 
