@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
 
 import AddProduct from '../component/addpproduct/AddProduct'
+import ProductCard from '../component/card/ProductCard'
 
 const AdminHomepage = () => {
 
@@ -52,7 +53,11 @@ const AdminHomepage = () => {
 
       </div>
 
+      <div>
 
+        <ProductCard/>
+        
+</div>
 
 
     </div>

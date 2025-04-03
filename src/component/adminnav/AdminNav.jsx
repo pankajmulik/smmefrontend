@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import navitems from './adminnavdata/adminnavdata'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 
 const AdminNav = () => {
+
 
     const [shownav, setshownav] = useState(false);
 
@@ -18,7 +19,7 @@ const AdminNav = () => {
         localStorage.removeItem('authToken');
         window.location.href = '/admin/santu';
     };
-
+    
     return (
         <div className="bg-zinc-700 text-white fixed top-0 left-0 w-full z-50">
             {/* Header */}
@@ -43,22 +44,24 @@ const AdminNav = () => {
                     </button>
                     {/* Navigation Links for Larger Screens */}
                     <div className="hidden md:flex justify-end space-x-4">
-                        {navitems.map((item) => (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                className="hover:text-gray-300"
-                            >
-                                {item.name}
-                            </NavLink>
-                        ))}
+                        {navitems.map((item) => {
+                            return (
+                                <NavLink to={item.path} key={item.path} className="hover:text-gray-300">
+                                    {item.name}
+                                    
+                              </NavLink>
+                            )
+                        }
+                        )
+                        }
+                            
 
 
                         <div>
                             <button onClick={handlelogout} className="hover:text-gray-300">
-Logout
+                                Logout
 
-                        </button>
+                            </button>
                         </div>
 
                     </div>
@@ -87,15 +90,15 @@ Logout
                             </div>
                         ))}
 
-                        
+
                         <div className="px-6 py-4">
                             <button onClick={handlelogout} className="block hover:text-gray-300">
                                 Logout
-                            </button>   
-                            </div>
+                            </button>
+                        </div>
                     </div>
 
-                 
+
 
                 </div>
             </div>

@@ -6,11 +6,13 @@ const AddProduct = () => {
         category: "",
         name: "",
         brand: "",
+        colors: [""],
         imageUrl: "",
         price: "",
         description: "",
         battery: "",
         display: "",
+       
         storage: "",
         network: "",
         imageUrls: [""]
@@ -18,6 +20,19 @@ const AddProduct = () => {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+
+
+
+    const handlecolorsChange = (index, e) => {
+        const newColors = [...formData.colors];
+        newColors[index] = e.target.value;
+        setFormData({ ...formData, colors: newColors });
+    };
+
+    const handleAddColor = () => {
+        setFormData({ ...formData, colors: [...formData.colors, ""] });
     };
 
     const handleImageUrlsChange = (index, e) => {
@@ -37,7 +52,7 @@ const AddProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("/api/products", formData);
+            const response = await axios.post("localhost:8080/smm/dukan/products/add", formData);
             console.log("Product added:", response.data);
         } catch (error) {
             console.error("Error adding product:", error);
@@ -92,6 +107,19 @@ const AddProduct = () => {
                                 <label className="block text-gray-700 font-bold mb-2">Battery</label>
                                 <input name="battery" value={formData.battery} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg" />
                             </div>
+
+
+                            {
+                                formData.colors.map((color, index) => (
+                                    <div key={index} className="mb-4">
+                                        <label className="block text-gray-700 font-bold mb-2">Color</label>
+                                        <input name={`colors[${index}]`} value={color} onChange={(e) => handlecolorsChange(index, e)} className="w-full px-3 py-2 border rounded-lg" />
+                                    </div>
+                                ))
+                            }
+
+                            <button type="button" onClick={handleAddColor} className="bg-blue-500 text-white px-3 py-2 rounded-lg">Add Color</button>
+
 
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2">Display</label>

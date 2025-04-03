@@ -1,13 +1,11 @@
 import React, { useEffect,useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import data from '../data/data';
-import { useNavigate } from 'react-router-dom';
 
+import Navbar from '../component/navbar/Navbar';
 
 const AllMobiles = () => {
 
-    
-      const navigate = useNavigate();
       const [productdata, setproductdata] = useState([]);
 
  useEffect(() => {
@@ -18,7 +16,16 @@ const AllMobiles = () => {
   }, []);
 
     return (
-        <div className="pt-16"> {/* Added padding-top */}
+        <div className="grid grid-flow-row grid-rows-5"> {/* Added padding-top */}
+            
+
+            <div>
+                <Navbar></Navbar>
+            </div>
+            <div className='h-100'>
+
+            </div>
+
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {/* {data.mobilePhones.map((mobile) => (
                     <div className="bg-white shadow-md rounded-lg overflow-hidden" key={mobile.name}>

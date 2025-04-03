@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Signup = () => {
 
-    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
+    const [error, setError] = useState(null);
+    const [verified, setVerified] = useState(false);
 
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        username: '',
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
         mobileNumber: '',
-        otp: '',
+        dob: ''
 
     });
 
@@ -34,16 +37,48 @@ const Signup = () => {
 
     const validateForm = () => {
         let formErrors = {};
-        if (!formData.username) formErrors.username = 'Username is required';
+        if (!formData.name) formErrors.name = 'Name is required';
         if (!formData.email) formErrors.email = 'Email is required';
         if (!formData.password) formErrors.password = 'Password is required';
         if (formData.password !== formData.confirmPassword) formErrors.confirmPassword = 'Passwords do not match';
         if (!formData.mobileNumber) formErrors.mobileNumber = 'Mobile number is required';
-        if (!formData.accessCode) formErrors.accessCode = 'Access code is required';
+        if (!formData.dob) formErrors.dob = 'Date of birth is required';
+
+
+        if(formData.password.length < 8) formErrors.password = 'Password must be at least 8 characters long';
+        if(formData.mobileNumber.length !==10 ) formErrors.mobileNumber = 'Mobile number must be 10 digits long';
+
         return formErrors;
     };
 
+
+    const validateAccessCode = async (accessCode) => {
+
+        try {
+            const response = await axios.post('http://localhost:8080/new/admin/santu/code/to/acess/code/verifycode', {
+                accessCode: accessCode
+            });
+            if (response.data.success) {
+                setVerified(true);
+
+
+            }
+
+        }
+        catch (error) {
+            setError(error.response.data.message);
+
+        }
+        finally {
+            console.log('finally');
+        }
+    };
+
     const handleSubmit = async (e) => {
+        setLoading(true);
+
+        formData.mobileNumber = `+91${formData.mobileNumber}`;
+
         e.preventDefault();
         const formErrors = validateForm();
         if (Object.keys(formErrors).length > 0) {
@@ -52,65 +87,68 @@ const Signup = () => {
         }
 
         // Validate access code from database
-        const isValidAccessCode = await validateAccessCode(accessCode)
+        validateAccessCode(accessCode);
 
-        if (!isValidAccessCode) {
-            setErrors({ accessCode: 'Invalid access code' });
-            return;
+        // if (!isValidAccessCode) {
+        //     setErrors({ accessCode: 'Invalid access code' });
+        //     return;
+        // }
+
+
+        try {
+            const response = await axios.post('http://localhost:8080/smm/santu/admin/signup', {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                mobilenumber: formData.mobileNumber,
+                dob: formData.dob
+            });
+            if (response.data.success) {
+                console.log('Signup successful:', response.data.user);
+                navigate('/sign/up/succes');
+            } else {
+                setErrors({ email: response.data.error });
+            }
+        } catch (error) {
+            setErrors({ email: error.response.data.error });
+        } finally {
+            setLoading(false);
         }
 
 
-    };
 
-    const validateAccessCode = async (accessCode) => {
-        // Replace with actual API call to validate access code
-
-        axios.get('http://localhost:8080/sm/admin')
-
-        return true;
     };
 
 
 
-    // const handleSendCode = async () => {
-    //     setPhone(formData.mobileNumber)
-    //     try {
-    //         const response = await axios.post('http://localhost:8080/smm/santu/admin/send-verification-code', { phoneNumber });
-    //         if (response.data.success) {
-    //             setStep(2);
-    //         } else {
-    //             setError('Failed to send verification code');
-    //         }
-    //     } catch (error) {
-    //         setError('An error occurred. Please try again.');
-    //     }
-
-
-    // };
-
-    // const handleVerifyCode = async () => {
-    //     try {
-    //         const response = await axios.post('http://localhost:8080/smm/santu/admin/verify-code', { phoneNumber, code });
-    //         if (response.data.success) {
-    //             alert('Phone number verified successfully');
-    //         } else {
-    //             setError('Invalid verification code');
-    //         }
-    //     } catch (error) {
-    //         setError('An error occurred. Please try again.');
-    //     }
-    // };
 
 
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
             <h2 className="text-2xl font-bold mb-6">Signup</h2>
+
+
+            <div className="mb-4">
+                <label className="block text-gray-700">Access Code</label>
+                <input type="text" name="accessCode" value={formData.accessCode} onChange={(e) => {
+                    setAccessCode(e.target.value)
+                }} className="w-full px-3 py-2 border rounded-md" />
+                {errors.accessCode && <span className="text-red-500 text-sm">{errors.accessCode}</span>}
+
+                <div>
+                    {verified && <p>Access code verified</p>
+
+                    }
+                </div>
+
+            </div>
+
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                    <label className="block text-gray-700">Username</label>
-                    <input type="text" name="username" value={formData.username} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
-                    {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
+                    <label className="block text-gray-700">Full Name</label>
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+                    {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700">Email</label>
@@ -127,6 +165,20 @@ const Signup = () => {
                     <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
                     {errors.confirmPassword && <span className="text-red-500 text-sm">{errors.confirmPassword}</span>}
                 </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700">Date of Birth</label>
+                    <input
+                        type="date"
+                        name="dob"
+                        value={formData.dob}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border rounded-md"
+                    />
+                    {errors.dob && (
+                        <span className="text-red-500 text-sm">{errors.dob}</span>
+                    )}
+                </div>
+
                 {/* <div className="mb-4">
                     <label className="block text-gray-700">Mobile Number</label>
                     <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
@@ -173,15 +225,38 @@ const Signup = () => {
                 </div>
 
 
-                <div className="mb-4">
-                    <label className="block text-gray-700">Access Code</label>
-                    <input type="text" name="accessCode" value={formData.accessCode} onChange={(e) => {
-                        setAccessCode(e.target.value)
-                    }} className="w-full px-3 py-2 border rounded-md" />
-                    {errors.accessCode && <span className="text-red-500 text-sm">{errors.accessCode}</span>}
-                </div>
 
-                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md">Signup</button>
+
+                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md" >
+
+                    {loading ? (
+                        <div className="flex items-center justify-center">
+                            <svg
+                                className="animate-spin h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                ></circle>
+                                <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                                ></path>
+                            </svg>
+                            <span className="ml-2">Loading...</span>
+                        </div>
+                    ) : (
+                        "Sign Up"
+                    )}
+
+                </button>
             </form>
 
             already have an account? <a href="/admin/santu" className="text-blue-500">Login</a>

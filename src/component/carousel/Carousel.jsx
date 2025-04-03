@@ -25,7 +25,7 @@ const Carousel = () => {
     }, []);
 
     return (
-        <div className=" overflow-hidden relative">
+        <div className="  grid md:grid-cols-2  xl:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 overflow-hidden relative">
 
 
           
@@ -36,7 +36,7 @@ const Carousel = () => {
             >
                 {images.map((src, index) => (
                     <div key={index} className="min-w-full relative">
-                        <img src={src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                        <img src={src} alt={`Slide ${index + 1}`} className="w-full h-full object-contain" />
                         <div className="absolute right-4 bottom-4 left-4">
                             <button className="bg-blue-500 text-white py-2 px-4 rounded mr-2">Buy Now</button>
                             <button className="bg-green-500 text-white py-2 px-4 rounded">Contact: 9503491515</button>
@@ -57,6 +57,8 @@ const Carousel = () => {
                     </div>
                 ))}
             </div>
+
+            
         </div>
     );
 }
