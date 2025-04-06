@@ -21,13 +21,13 @@ const navitems = [
 
     },
     {
-        name: "Reapairs",
-        path: '/repairs'
+        name: "SignUp/Login",
+        path: '/login'
 
     },
     {
-        name: "Ask A question",
-        path: '/ask-question'
+        name: "Contact us",
+        path: '/contact-us'
 
     }
     

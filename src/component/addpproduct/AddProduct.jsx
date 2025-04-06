@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddProduct = () => {
+const AddProduct = () => { 
     const [formData, setFormData] = useState({
         category: "",
         name: "",

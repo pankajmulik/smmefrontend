@@ -13,6 +13,7 @@ const Signup = () => {
 
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
+        role: 'Admin',
         name: '',
         email: '',
         password: '',
@@ -22,11 +23,15 @@ const Signup = () => {
 
     });
 
+
+
+
     const [accessCode, setAccessCode] = useState('');
 
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
+
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -45,8 +50,8 @@ const Signup = () => {
         if (!formData.dob) formErrors.dob = 'Date of birth is required';
 
 
-        if(formData.password.length < 8) formErrors.password = 'Password must be at least 8 characters long';
-        if(formData.mobileNumber.length !==10 ) formErrors.mobileNumber = 'Mobile number must be 10 digits long';
+        if (formData.password.length < 8) formErrors.password = 'Password must be at least 8 characters long';
+        if (formData.mobileNumber.length !== 10) formErrors.mobileNumber = 'Mobile number must be 10 digits long';
 
         return formErrors;
     };
@@ -97,6 +102,8 @@ const Signup = () => {
 
         try {
             const response = await axios.post('http://localhost:8080/smm/santu/admin/signup', {
+
+                role: formData.role,
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,
@@ -104,13 +111,14 @@ const Signup = () => {
                 dob: formData.dob
             });
             if (response.data.success) {
-                console.log('Signup successful:', response.data.user);
+                alert('Signup successful!');
+                // Optionally, redirect to a success page or login page
                 navigate('/sign/up/succes');
             } else {
-                setErrors({ email: response.data.error });
+                setErrors({msg: response.data.error });
             }
         } catch (error) {
-            setErrors({ email: error.response.data.error });
+            setErrors({ msg: error.response.data.error });
         } finally {
             setLoading(false);
         }

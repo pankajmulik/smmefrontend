@@ -17,7 +17,11 @@ import SuccessSignup from './pages/success/SuccessSignup';
 import Headphone from './pages/adminpages/headphone/Headphone';
 import AllAccessories from './pages/adminpages/accessories/AllAccessories';
 import Smartwatch from './pages/adminpages/smartwatches/Smartwatch'
-import AdminNav from './component/adminnav/AdminNav';
+import ContactUs from './pages/contact-us/ContactUs';
+import UserLogin from './pages/userlogin/UserLogin';
+import UserSignup from './pages/userlogin/UserSignup';
+import UserAuthgaurad from './component/authguard/UserAuthgaurad';
+
 function App() {
 
 
@@ -33,7 +37,12 @@ function App() {
         <Route path='accessory' element={<Accessory />} />
         <Route path='/sign/up/success' element={<SuccessSignup />} />
         <Route path="smart-watches" element={<SmartWatches />} />
-
+        <Route path='contact-us' element={<ContactUs/>} />
+        <Route path='/login' element={<UserLogin/>} />
+        <Route path='/signup' element={<UserSignup/> } />
+        <Route element={<UserAuthgaurad/>}>
+          
+</Route>
 
         <Route path='/admin/santu' element={<AdminLogin />} />
         <Route path='/admin/santu/signup' element={<Signup />} />
