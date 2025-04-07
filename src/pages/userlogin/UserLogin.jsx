@@ -2,9 +2,12 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const UserLogin = () => {
 
+
+  const navigate = useNavigate()
 
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
@@ -18,32 +21,35 @@ const UserLogin = () => {
     e.preventDefault();
    if(!validatinformation(email, password)){
     return
-   }
+    }
+    
+    navigate('/user-dashboard')
 
-try {
+// try {
   
 
-  const res = axios.post('http://localhost:8080/api/v1/user/login', {
-    email: email,
-    password: password,
-    role:'customer'
-  })
+//   const res = axios.post('http://localhost:8080/smm/customer/login/customer', {
+//     email: email,
+//     password: password,
+//     role:'customer'
+//   })
 
-  if (res.data.success) {
-    seterror('')
-    localStorage.setItem('user', JSON.stringify(res.data.user))
-    localStorage.setItem('token', res.data.token)
-    window.location.href = '/userdashboard'
-  }
-  else {
-    seterror(res.data.message)
-  }
+//   if (res.data.success) {
+//     seterror('')
+//     localStorage.setItem('user', JSON.stringify(res.data.user))
+//     localStorage.setItem('token', res.data.token)
+//     window.location.href = '/userdashboard'
+//   }
+//   else {
+//     seterror(res.data.message)
+//     alert(res.data.message)
+//   }
 
 
-} catch (error) {
-  console.log(error)
+// } catch (error) {
+//  alert(error.response.data.message)
   
-}
+// }
 
   }
 

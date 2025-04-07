@@ -6,7 +6,7 @@ const UserSignup = () => {
   const [loading, setLoading] = useState(false);
   const [error, seterror] = useState('')
   const [formdata, setformdata] = useState({
-    role: 'user',
+    role: 'customer',
     name: "",
     email: "",
     password: "",
