@@ -6,28 +6,28 @@ const navitems = [
     },
     {
         name: "All Mobiles",
-        path: '/all-mobiles'
+        path: 'all-mobiles'
 
     },
 
     {
         name: "Smart Watches",
-        path: '/smart-watches'
+        path: 'smart-watches'
 
     },
     {
         name: "Accessories",
-        path: '/accessory'
+        path: 'accessory'
 
     },
     {
         name: "SignUp/Login",
-        path: '/login'
+        path: 'login'
 
     },
     {
         name: "Contact us",
-        path: '/contact-us'
+        path: 'contact-us'
 
     }
     
