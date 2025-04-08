@@ -3,10 +3,11 @@ import 'swiper/css';
 
 const images = [
     "/images/carousel/iphone-15-pro.jpg",
-    "/images/carousel/samsung-phones.jpeg",
+    "images/carousel/samsung-galaxy-s24-ultra.avif",
     "/images/carousel/iphone-15-pro.jpg",
     "/images/carousel/Samsung-Galaxy-S25-Ultra.webp",
-    "/images/carousel/iphone-15-pro.jpg"
+    "/images/carousel/iphone-15-pro.jpg",
+   "images/carousel/Web_banner-5.png"
 ];
 
 const Carousel = () => {
@@ -37,7 +38,7 @@ const Carousel = () => {
                 {images.map((src, index) => (
                     <div key={index} className="min-w-full relative">
                         <img src={src} alt={`Slide ${index + 1}`} className="w-full h-full object-contain" />
-                        <div className="absolute right-4 bottom-4 left-4">
+                        <div className="absolute right-4 bottom-4 left-4  text-xs ">
                             <button className="bg-blue-500 text-white py-2 px-4 rounded mr-2">Buy Now</button>
                             <button className="bg-green-500 text-white py-2 px-4 rounded">Contact: 9503491515</button>
                         </div>

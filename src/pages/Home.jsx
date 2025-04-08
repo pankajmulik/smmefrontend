@@ -51,7 +51,7 @@ const Home = () => {
 
       </div>
 
-      <div className='mx-auto my-2 h-auto'>
+      <div className='mx-auto my-2 h-86 bg-red '>
         <Carousel />
       </div>
 
