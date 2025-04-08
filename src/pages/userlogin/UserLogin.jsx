@@ -17,39 +17,39 @@ const UserLogin = () => {
     setShowPassword(!showPassword);
     
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
    if(!validatinformation(email, password)){
     return
     }
     
-    navigate('/user-dashboard')
-
-// try {
   
 
-//   const res = axios.post('http://localhost:8080/smm/customer/login/customer', {
-//     email: email,
-//     password: password,
-//     role:'customer'
-//   })
-
-//   if (res.data.success) {
-//     seterror('')
-//     localStorage.setItem('user', JSON.stringify(res.data.user))
-//     localStorage.setItem('token', res.data.token)
-//     window.location.href = '/userdashboard'
-//   }
-//   else {
-//     seterror(res.data.message)
-//     alert(res.data.message)
-//   }
-
-
-// } catch (error) {
-//  alert(error.response.data.message)
+try {
   
-// }
+
+  const response = await axios.post('http://localhost:8080/smm/customer/login/customer', {
+    email: email,
+    password: password,
+    role:'customer'
+  })
+
+  if (response.data.success) {
+    seterror('')
+    localStorage.setItem('user', JSON.stringify(response.data.user))
+    localStorage.setItem('token', response.data.token)
+    window.location.href = '/user-dashboard'
+  }
+  else {
+    seterror(response.data.message)
+    alert(response.data.message)
+  }
+
+
+} catch (error) {
+ alert(error.response.data.message)
+  
+}
 
   }
 

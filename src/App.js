@@ -24,6 +24,7 @@ import UserAuthgaurad from './component/authguard/UserAuthgaurad';
 import UserProfile from './pages/userpages/UserProfile';
 import UserDashboard from './pages/userpages/UserDashboard';
 import UserNavbar from './component/usernav/UserNavbar';
+import SuccessSignupUser from './pages/success/SuccessSignupuser';
 function App() {
 
 
@@ -43,7 +44,7 @@ function App() {
         <Route path='/login' element={<UserLogin />} />
         <Route path='/signup' element={<UserSignup />} />
 
-
+        <Route path='/signup/success' element={<SuccessSignupUser />} />
 
 
 
